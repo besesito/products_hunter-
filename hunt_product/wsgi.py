@@ -1,5 +1,5 @@
 """
-WSGI config for hunt_product project.
+WSGI config for hunt project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

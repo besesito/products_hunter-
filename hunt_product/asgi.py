@@ -1,5 +1,5 @@
 """
-ASGI config for hunt_product project.
+ASGI config for hunt project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
