@@ -5,29 +5,32 @@
 <div class="alert alert-danger text-center" role="alert">
     {{ info }}
 </div>
-<br/>
 {% endif %}
 <br/>
-<h1>Create product: </h1>
 
+<h1>Create product: </h1>
+<br/>
 <form method="POST" action="{% url 'create' %}" enctype="multipart/form-data">
     {% csrf_token %}
-    <br/>
-    <h4>Title:</h4>
-    <input type="text", name="title"/>
-    <br/>
-    <h4>Body:</h4>
-    <input  type="textbox", name="body" />
-    <br/>
-    <h4>URL:</h4>
-    <input type="url", name="url"/>
-    <br/>
-    <h4>Picture:</h4>
-    <input type="file", name="picture"/>
-    <br/>
-    <h4>Icon:</h4>
-    <input type="file", name="icon"/>
-    <br/>
+
+    <div class="input-group mb-3">
+        <input placeholder="Title" aria-label="Recipient's username" aria-describedby="basic-addon2" class="form-control" type="text", name="title"/>
+    </div>
+
+    <div class="input-group mb-3">
+        <input placeholder="Body" aria-label="Recipient's username" height="300" aria-describedby="basic-addon2" class="form-control" type="text", name="body"/>
+    </div>
+    <div class="input-group mb-3">
+        <input placeholder="URL" aria-label="Recipient's username" aria-describedby="basic-addon2" class="form-control" type="text", name="url"/>
+    </div>
+    <div class="input-group mb-3">
+  <label class="input-group-text" for="inputGroupFile01">Picture</label>
+  <input type="file" class="form-control" id="inputGroupFile01" name="picture">
+</div>
+    <div class="input-group mb-3">
+  <label class="input-group-text" for="inputGroupFile02">Icon</label>
+  <input type="file" class="form-control" id="inputGroupFile02" name="icon">
+</div>
 
     <br/>
     <input class="btn btn-dark" type="submit" value="Add product!"/>
