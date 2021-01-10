@@ -41,4 +41,4 @@ def login(request):
 def logout(request):
     if request.method == 'POST':
         auth.logout(request)
-        return render(request, 'products/home.html', {'info': "You are logged out"})
+        return redirect('home')
