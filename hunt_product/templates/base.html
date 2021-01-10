@@ -57,15 +57,15 @@
                         <input type="hidden" />
                     </form>
                     {% else %}
-                    <a class="nav-link" href="{% url 'signup' %}">Sign Up</a>
-                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    <a class="nav-link" href="{% url 'signup' %}"><i class="bi bi-person-plus-fill"></i> Sign Up</a>
+                    <a class="nav-link" href="{% url 'login' %}"><i class="bi bi-door-open"></i> Login</a>
                     {% endif %}
                 </div>
             </div>
         </div>
     </nav>
 </header>
-<div class="container row">
+<div class="container">
     {% block content %}
     {% endblock %}
 </div>

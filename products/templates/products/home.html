@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-<br xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"/>
 {% if info %}
 <div class="alert alert-success text-center" role="alert">
     {{ info }}
@@ -8,7 +7,8 @@
 {% endif %}
 
 {% for product in products.all %}
-<div class="row pb-3">
+<div class="container row">
+<div class="row pt-3">
     <div class="col-3" onclick="window.location='{% url 'detail' product.id %}';" style="cursor: pointer;">
         <img class="img-fluid" src="{{ product.icon.url }}">
     </div>
@@ -20,6 +20,7 @@
         </br>
         <a href="javascript:{document.getElementById('upvote{{ product.id }}').submit()}"><button type="button" class="btn btn-secondary btn-lg"><i class="bi bi-hand-thumbs-up"></i> Upvote {{ product.votes_total }}</button></a>
    </div>
+</div>
 </div>
 
 <form method="POST" action="{% url 'upvote' product.id %}" id="upvote{{ product.id }}">
