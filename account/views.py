@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
+from products.models import Product
+
 
 def signup(request):
 
@@ -30,7 +32,8 @@ def login(request):
         user = auth.authenticate(username=request.POST['username'], password=request.POST['password'])
         if user is not None:
             auth.login(request, user)
-            return render(request, 'products/home.html', {'info': "Welcome back {}".format(request.POST['username'].capitalize())})
+            products = Product.objects
+            return render(request, 'products/home.html', {'info': "Welcome back {}".format(request.POST['username'].capitalize()), 'products':products})
         else:
             return render(request, 'account/login.html', {'info': "Your login or password is incorrect"})
 
@@ -41,4 +44,5 @@ def login(request):
 def logout(request):
     if request.method == 'POST':
         auth.logout(request)
-        return redirect('home')
+        products = Product.objects
+        return render(request, 'products/home.html', {'info': "You are logged out", 'products':products})
