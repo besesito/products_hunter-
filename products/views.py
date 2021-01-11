@@ -5,6 +5,8 @@ from django.utils import timezone
 
 
 
+
+
 def home(request):
     products = Product.objects
     return render(request, 'products/home.html', { 'products':products })
@@ -25,6 +27,8 @@ def create(request):
                 product.url = "http://{}".format(product.url)
             product.pub_date = timezone.datetime.now()
             product.hunter = request.user
+            username = request.user.username
+            product.voted_users.append(username)
             product.save()
             return redirect('/products/' + str(product.id))
         else:
@@ -38,8 +42,15 @@ def detail(request, product_id):
 
 @login_required(login_url="/account/signup")
 def upvote(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+    username = request.user.username
     if request.method=='POST':
-        product = get_object_or_404(Product, pk=product_id)
-        product.votes_total += 1
-        product.save()
-        return redirect('/products/' + str(product.id))
+
+        if username in product.voted_users:
+            print(product.voted_users)
+            return render(request, 'products/detail.html', {'product': product, 'info': 'You voted on this product already'})
+        else:
+            product.voted_users.append(username)
+            product.votes_total += 1
+            product.save()
+            return redirect('/products/' + str(product.id))
