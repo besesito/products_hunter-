@@ -3,9 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from products.models import Product
 
-
 def signup(request):
-
     if request.method == 'POST':
         #USER WANTS TO SIGN UP NOW
         if len(request.POST['password2']) > 0 and len(request.POST['password1']) > 0 and len(request.POST['username']) > 0:
@@ -26,7 +24,6 @@ def signup(request):
         #USER WANTS TO ENTER INFO
         return render(request, 'account/signup.html')
 
-
 def login(request):
     if request.method == 'POST':
         user = auth.authenticate(username=request.POST['username'], password=request.POST['password'])
@@ -36,7 +33,6 @@ def login(request):
             return render(request, 'products/home.html', {'info': "Welcome back {}".format(request.POST['username'].capitalize()), 'products':products})
         else:
             return render(request, 'account/login.html', {'info': "Your login or password is incorrect"})
-
     else:
         # USER WANTS TO ENTER INFO
         return render(request, 'account/login.html')

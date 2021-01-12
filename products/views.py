@@ -1,11 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Product
+from .models import Product, Vote
 from django.utils import timezone
-
-
-
-
 
 def home(request):
     products = Product.objects
@@ -26,10 +22,11 @@ def create(request):
             else:
                 product.url = "http://{}".format(product.url)
             product.pub_date = timezone.datetime.now()
+
             product.hunter = request.user
-            username = request.user.username
-            product.voted_users.append(username)
             product.save()
+            vote = Vote(user=request.user, product=Product(product.id))
+            vote.save()
             return redirect('/products/' + str(product.id))
         else:
             return render(request, 'products/create.html', {'info':'Please fill all fields'})
@@ -42,15 +39,25 @@ def detail(request, product_id):
 
 @login_required(login_url="/account/signup")
 def upvote(request, product_id):
-    product = get_object_or_404(Product, pk=product_id)
-    username = request.user.username
     if request.method=='POST':
-
-        if username in product.voted_users:
-            print(product.voted_users)
-            return render(request, 'products/detail.html', {'product': product, 'info': 'You voted on this product already'})
-        else:
-            product.voted_users.append(username)
+        product = get_object_or_404(Product, pk=product_id)
+        try:
+            vote = Vote.objects.get(user = request.user, product = product_id)
+        except:
+            vote = None
+        if vote == None:
             product.votes_total += 1
             product.save()
+            vote = Vote(user=request.user, product=Product(product_id))
+            vote.save()
             return redirect('/products/' + str(product.id))
+        else:
+            return render(request, 'products/detail.html', {'product':product, 'info': 'You voted on this product already'})
+
+
+
+
+
+
+
+

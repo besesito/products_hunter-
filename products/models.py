@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+
 class Product(models.Model):
     title = models.CharField(max_length=50)
     icon = models.ImageField(upload_to='images/')
@@ -11,7 +12,6 @@ class Product(models.Model):
     url = models.URLField()
     votes_total = models.IntegerField(default=1)
     hunter = models.ForeignKey(User, on_delete=models.CASCADE)
-    voted_users = []
 
     def pub_date_pretty(self):
         return self.pub_date.strftime("%d-%m-%Y")
@@ -23,6 +23,10 @@ class Product(models.Model):
         self.summary = self.body.split()
         self.summary = self.summary[:20]
         return " ".join(self.summary) + "..."
+
+class Vote(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
 
 
